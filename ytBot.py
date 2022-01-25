@@ -27,19 +27,20 @@ async def convert(ctx, url, format):
 @bot.command()
 async def cut(ctx, url, start, end, format):
     yt = YouTube(url)
-    stream = yt.streams.get_highest_resolution()
-    fname = yt.title
-    stream.download(filename=fname + '.mp4')
-    clip = VideoFileClip(fname+'.mp4').subclip(start, end)
-    if format == 'mp4':
-        clip.write_videofile("edited.mp4")
-        clip.close()
-    elif format == 'mp3':
-        audio = clip.audio
-        audio.write_audiofile("edited.mp3")
-        clip.close()
-    yt.register_on_complete_callback(await ctx.send("Video is clipped..! \n Rename the file from edited.{} to any other name...".format(format)))
-    os.remove(os.getcwd() + '/' + fname + '.mp4')
+    await ctx.send("Your video {}".format(url.title))
+    # stream = yt.streams.get_highest_resolution()
+    # fname = yt.title
+    # stream.download(filename=fname + '.mp4')
+    # clip = VideoFileClip(fname+'.mp4').subclip(start, end)
+    # if format == 'mp4':
+    #     clip.write_videofile("edited.mp4")
+    #     clip.close()
+    # elif format == 'mp3':
+    #     audio = clip.audio
+    #     audio.write_audiofile("edited.mp3")
+    #     clip.close()
+    # yt.register_on_complete_callback(await ctx.send("Video is clipped..! \n Rename the file from edited.{} to any other name...".format(format)))
+    # os.remove(os.getcwd() + '/' + fname + '.mp4')
 
 @bot.command()
 async def hello(ctx):
