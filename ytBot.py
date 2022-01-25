@@ -28,9 +28,9 @@ async def convert(ctx, url, format):
 async def cut(ctx, url, start, end, format):
     yt = YouTube(url)
     await ctx.send("Your video {}".format(yt.title))
-    # stream = yt.streams.get_highest_resolution()
-    # fname = yt.title
-    # stream.download(filename=fname + '.mp4')
+    stream = yt.streams.get_highest_resolution()
+    fname = yt.title
+    stream.download(filename=fname + '.mp4')
     # clip = VideoFileClip(fname+'.mp4').subclip(start, end)
     # if format == 'mp4':
     #     clip.write_videofile("edited.mp4")
