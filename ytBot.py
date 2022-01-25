@@ -1,3 +1,4 @@
+from fileinput import filename
 from discord.ext import commands
 from pytube import YouTube
 import os
@@ -11,17 +12,18 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
 @bot.command()
-async def convert(ctx, url, format):
-    
+async def convert(ctx, url, format, filename=''):
     yt = YouTube(url)
     if format == 'mp3':
         stream = yt.streams.filter(only_audio=True).first()
         fname = yt.title + '.mp3'
     elif format == 'mp4':
         stream = yt.streams.get_highest_resolution()
-        fname = yt.title + '.mp4'  
-    stream.download(os.getcwd())
-    print(os.getcwd() + '/' + fname +'\n')
+        fname = yt.title + '.mp4'
+    if filename:
+        fname = filename
+    stream.download(filename=fname)
+    ctx.send(file=discord.File(fname))
     yt.register_on_complete_callback(await ctx.send("Download completed..! {}".format(fname)))
 
 @bot.command()
