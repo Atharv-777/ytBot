@@ -19,7 +19,7 @@ async def convert(ctx, url, format):
         fname = yt.title + '.mp3'
     elif format == 'mp4':
         stream = yt.streams.get_highest_resolution()
-        fname = yt.title + '.mp4'
+        fname = yt.title + '.mp4'  
     stream.download(os.getcwd())
     print(os.getcwd() + '/' + fname +'\n')
     yt.register_on_complete_callback(await ctx.send("Download completed..! {}".format(fname)))
