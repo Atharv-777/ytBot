@@ -44,13 +44,13 @@ async def cut(ctx, url, start, end, format):
 @bot.command()
 async def hello(ctx):
     await ctx.send("Hello {}, how are ya?".format(ctx.message.author.mention))
-
+     
 @bot.command()
 async def service(ctx):
     await ctx.send("Well {}, Really good question.. I can \n 1. Download youtube video into mp3/mp4 format. \n 2. Cut(clip) any youtube video for specified time(in seconds).".format(ctx.message.author.mention))
 
 #Put this at the bottom of your .py file
 try:
-    bot.run("OTMxNDgwNjgxMDAxOTE0Mzc5.YeFC_A.opVJmgQvUD1zaR3XkIR0EFmUYVM")
+    bot.run("OTMxNDgwNjgxMDAxOTE0Mzc5.YeFC_A.TSKv3dQRIoJ4LhfA8HLDHvhdeb4")
 except discord.errors.LoginFailure as e:
     print("Login unsuccessful.")
