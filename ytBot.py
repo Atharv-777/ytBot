@@ -21,6 +21,7 @@ async def convert(ctx, url, format, filename=''):
         fname = yt.title + '.mp4'
     if filename:
         fname = filename
+    print("Reached till download phase...")
     stream.download(filename=fname)
     # ctx.send(file=discord.File(os.path.join(os.getcwd(), fname)))
     yt.register_on_complete_callback(await ctx.send("Download completed..! {}".format(fname)))
