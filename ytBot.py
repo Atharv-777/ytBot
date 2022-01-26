@@ -22,7 +22,7 @@ async def convert(ctx, url, format, filename=''):
     if filename:
         fname = filename
     stream.download(filename=fname)
-    ctx.send(file=discord.File(os.path.join(os.getcwd(), fname)))
+    # ctx.send(file=discord.File(os.path.join(os.getcwd(), fname)))
     yt.register_on_complete_callback(await ctx.send("Download completed..! {}".format(fname)))
 
 @bot.command()
