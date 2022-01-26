@@ -22,8 +22,8 @@ async def convert(ctx, url, format, filename=''):
         fname = yt.title + '.mp4'
     if filename:
         fname = filename
-    stream.download(filename=fname)
-    ctx.send(file=discord.File(fname))
+    # stream.download(filename=fname)
+    # ctx.send(file=discord.File(fname))
     yt.register_on_complete_callback(await ctx.send("Download completed..! {}".format(fname)))
 
 @bot.command()
