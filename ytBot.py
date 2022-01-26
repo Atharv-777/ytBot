@@ -12,19 +12,22 @@ async def on_ready():
 
 @bot.command()
 async def convert(ctx, url, format, filename=''):
-    yt = YouTube(url)
-    if format == 'mp3':
-        stream = yt.streams.filter(only_audio=True).first()
-        fname = yt.title + '.mp3'
-    elif format == 'mp4':
-        stream = yt.streams.get_highest_resolution()
-        fname = yt.title + '.mp4'
-    if filename:
-        fname = filename
-    print("Reached till download phase...")
-    stream.download(filename=fname)
-    # ctx.send(file=discord.File(os.path.join(os.getcwd(), fname)))
-    yt.register_on_complete_callback(await ctx.send("Download completed..! {}".format(fname)))
+    try:
+        yt = YouTube(url)
+        if format == 'mp3':
+            stream = yt.streams.filter(only_audio=True).first()
+            fname = yt.title + '.mp3'
+        elif format == 'mp4':
+            stream = yt.streams.get_highest_resolution()
+            fname = yt.title + '.mp4'
+        if filename:
+            fname = filename
+        print("Reached till download phase...")
+        stream.download(filename=fname)
+        await ctx.send(file=discord.File(fname))
+        yt.register_on_complete_callback(await ctx.send("Download completed..! {}".format(fname)))
+    except Exception as e:
+        print(e)
 
 @bot.command()
 async def cut(ctx, url, start, end, format):
