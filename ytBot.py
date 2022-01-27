@@ -5,48 +5,46 @@ from moviepy.editor import VideoFileClip
 import discord
 
 bot = commands.Bot(command_prefix = '#')
-
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
 @bot.command()
-async def convert(ctx, url, format, filename=''):
-    try:
-        yt = YouTube(url)
-        if format == 'mp3':
-            stream = yt.streams.filter(only_audio=True).first()
-            fname = yt.title + '.mp3'
-        elif format == 'mp4':
-            stream = yt.streams.get_highest_resolution()
-            fname = yt.title + '.mp4'
-        if filename:
-            fname = filename
-        print("Reached till download phase...")
-        stream.download(filename=fname)
-        await ctx.send(file=discord.File(fname))
-        yt.register_on_complete_callback(await ctx.send("Download completed..! {}".format(fname)))
-    except Exception as e:
-        print(e)
+async def convert(ctx, url, format):
+    yt = YouTube(url)
+    if format == 'mp3':
+        stream = yt.streams.filter(only_audio=True).first()
+        fname = yt.title + '.mp3'
+    elif format == 'mp4':
+        stream = yt.streams.get_highest_resolution()
+        fname = yt.title + '.mp4'
+    print(fname)
+    print("Reached till download phase...")
+    stream.download(filename=fname)
+    yt.register_on_complete_callback(await ctx.send("Download completed..! wait let me share the file"))
+    await ctx.send("Here is your file \n", file=discord.File(fname))
+    os.remove(os.getcwd() + '/' + fname)
 
 @bot.command()
-async def cut(ctx, url, start, end, format):
+async def clip(ctx, url, start, end, format):
     yt = YouTube(url)
     stream = yt.streams.get_highest_resolution()
-    fname = yt.title
-    stream.download(filename=fname + '.mp4')
-    await ctx.send("Your video {}".format(yt.title))
+    fname = yt.title + '.mp4'
+    stream.download(filename=fname)
     print("{} video downloaded.".format(yt.title))
-    # clip = VideoFileClip(fname+'.mp4').subclip(start, end)
-    # if format == 'mp4':
-    #     clip.write_videofile("edited.mp4")
-    #     clip.close()
-    # elif format == 'mp3':
-    #     audio = clip.audio
-    #     audio.write_audiofile("edited.mp3")
-    #     clip.close()
-    # yt.register_on_complete_callback(await ctx.send("Video is clipped..! \n Rename the file from edited.{} to any other name...".format(format)))
-    # os.remove(os.getcwd() + '/' + fname + '.mp4')
+    clip = VideoFileClip(fname).subclip(start, end)
+    if format == 'mp4':
+        clipName = "clipped.mp4"
+        clip.write_videofile(clipName)
+        clip.close()
+    elif format == 'mp3':
+        audio = clip.audio
+        clipName = "clipped.mp3"
+        audio.write_audiofile(clipName)
+        clip.close()
+    yt.register_on_complete_callback(await ctx.send("Video is clipped..! \n Rename the file from {} to any other name...".format(clipName)))
+    await ctx.send("Here is your clipped file", file=discord.File(clipName))
+    os.remove(os.getcwd() + '/' + fname)
 
 @bot.command()
 async def hello(ctx):
