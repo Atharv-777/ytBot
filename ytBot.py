@@ -56,6 +56,6 @@ async def service(ctx):
 
 #Put this at the bottom of your .py file
 try:
-    bot.run("<token here>")
+    bot.run("OTMxNDgwNjgxMDAxOTE0Mzc5.YeFC_A.oUT2GaDyv5WUkra8JCbRAVjYhts")
 except discord.errors.LoginFailure as e:
     print("Login unsuccessful.")
