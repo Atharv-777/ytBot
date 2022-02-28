@@ -31,20 +31,16 @@
 
 # compress("song.mp4")
 
-import json
-import requests
-headers = {"Authorization": "Bearer ya29.A0ARrdaM8fyOAEJvRR9TYdLvS30l9fHm6jnPz2MlA17zTbJ68iGMTmIhNXpQUwYIlcQoo6sfSJV7isCNEg6UKHJsiuf_6AoEELtEpfH8UbMq1JBX9f1MX5gNXCgXBVWKSlzDiEPCofFn1X4C-xK6feqSFUClMv"}
-para = {
-    "name": "test.mp4",
-    "parents": ["1cf1dUm6l9fsaF0AaeGVjINB8bxQnsscT"]
-}
-files = {
-    'data': ('metadata', json.dumps(para), 'application/json; charset=UTF-8'),
-    'file': open("./song.mp4", "rb")
-}
-r = requests.post(
-    "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
-    headers=headers,
-    files=files
-)
-print(r.text)
+from pydrive.drive import GoogleDrive
+from pydrive.auth import GoogleAuth
+import os
+
+
+gauth = GoogleAuth()
+gauth.LocalWebserverAuth()
+drive = GoogleDrive(gauth)
+path = 'video'
+
+file = "t1.mp4"
+f = drive.CreateFile({'title':file, 'parents': [{'id': '1lNlZW9M1AN7DvT_6vIcOW6CgzSpfFtPJ'}]})
+f.Upload()
