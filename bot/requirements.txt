@@ -1,0 +1,6 @@
+discord.py==1.7.3
+mega==0.2.11
+mega.py==1.0.8
+moviepy==1.0.3
+python-dotenv==0.19.2
+pytube==11.0.2
